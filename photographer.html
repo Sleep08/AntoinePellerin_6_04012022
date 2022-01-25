@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/e537cf3103.js" crossorigin="anonymous"></script>
     <title>Fisheye - photographe </title>
   </head>
   <body>
@@ -16,40 +17,58 @@
         <div class="headerPhotographTxt"></div>
         <button class="contact_button" id="openModal">Contactez-moi</button>
       </div>
+      <footer id="footer"></footer>
       <div id="contact_modal">
         <div class="modal">
           <header>
             <h2 id="contactPhotograph">Contactez-moi</h2>
             <img src="assets/icons/close.svg" onclick="closeModal()"/>
           </header>
-          <form>
-            <div>
-              <label>Prénom</label>
-              <input />
+          <form id="contact" method="get">
+            <div class="elementForm">
+              <label for="firstname">Prénom</label>
+              <input type="text" id="firstname" />
+              <p id="erreurPrenom"></p>
             </div>
-            <div>
-              <label>Nom</label>
-              <input />
+            <div class="elementForm">
+              <label for="lastname">Nom</label>
+              <input type="text" id="lastname" />
+              <p id="erreurNom"></p>
             </div>
-            <div>
-              <label>Email</label>
-              <input />
+            <div class="elementForm">
+              <label for="email">Email</label>
+              <input type="email" id="email" />
+              <p id="erreurEmail"></p>
             </div>
-            <div>
-              <label>Votre message</label>
-              <textarea />
+            <div class="elementForm">
+              <label for="message">Votre message</label>
+              <input type="text" id="message" />
+              <p id="erreurMessage"></p>
             </div>
-            <button class="contact_button">Envoyer</button>
+            <button class="contact_button" type="submit" id="btnEnvoi">Envoyer</button>
           </form>
         </div>
       </div>
+      <nav>
+        <p id="trier">Tier par :</p>
+				<select
+					id="optionMedias"
+					class="photographer-page__dropdown-menu focus__element-secondary"
+					aria-label="Order by"
+					tabindex="4"
+				>
+					<option value="popularity" class="mediaChoice">Popularité</option>
+					<option value="title" class="mediaChoice">Titre</option>
+				</select>
+      </nav>
       <article id="media_gallery">
       </article>
-      <div id="footer"></div>
+      </div>
     </main>
+    <script src="scripts/factories/photographer.js"></script>
     <script src="scripts/factories/media.js"></script>
     <script src="scripts/pages/photographer.js"></script>
+    <script src="scripts/utils/Lightbox.js"></script>
     <script src="scripts/utils/contactForm.js"></script>
-    <script src="scripts/factories/photographer.js"></script>
   </body>
 </html>

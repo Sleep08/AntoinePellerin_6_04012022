@@ -1,42 +1,50 @@
-function mediaFactory(data) {
-    // Ajout de récupération des données de la ville, la citation et le prix
-    const { title, image, video, photographerId, likes, price, id } = data;
-
-    // Modification du chemin vers l'image portrait du photographe :
-    const mediaImage = `FishEye_Photos/SamplePhotos/Photographies/${image}`;
-    const mediaVideo = `FishEye_Photos/SamplePhotos/Photographies/${video}`;
-
-    function getMediaCardDOM() {
-        const gallery = document.createElement('article');
-        const img = document.createElement('img');
-        img.setAttribute("src", mediaImage);
-        const vd = document.createElement('iframe');
-        vd.setAttribute("width", 320);
-        vd.setAttribute("height", 320);
-        vd.setAttribute("src", mediaVideo);
-        const photoLegend = document.createElement('div');
-        photoLegend.setAttribute("id", "photoLegend");
-        const titre = document.createElement('p');
-        titre.textContent = title;
-
-        let likesCompteur = parseInt(likes);
-        const nbLike = document.createElement('p');
-        nbLike.setAttribute("id", "nbLike");
-        nbLike.innerHTML = likesCompteur + " ❤";
-
-        if (mediaImage.endsWith(".jpg")) {
-        gallery.appendChild(img)}
-        else { 
-        gallery.appendChild(vd)};
-        gallery.appendChild(photoLegend);
-        photoLegend.appendChild(titre);
-        photoLegend.appendChild(nbLike);
-
-        nbLike.addEventListener('click', function(){
-            likesCompteur++;
-            nbLike.innerHTML = likesCompteur + " ❤";
-        })
-        return(gallery);
+class mediaFactory {
+    constructor(data) {
+        if (data.image) {
+            return new imgConstructor(data);
+        } else {
+            return new videoConstructor(data);
+        }
     }
-    return { title, image, photographerId, likes, price, id, getMediaCardDOM }
 }
+
+class imgConstructor {
+    constructor(data) {
+        this._imgSrc = data.image;
+        this._imgTitle = data.title;
+        this._imgPhotographerId = data.photographerId;
+        this._imgLikes = data.likes; 
+    }
+    createHtml() {
+        return `
+        <figure>
+            <img src="FishEye_Photos/SamplePhotos/Photographies/${this._imgSrc}"/>
+            <figcaption id="photoLegend">
+                <p id="titre">${this._imgTitle}</p>
+                <p class="nbLikes">${this._imgLikes} ❤</p>
+            </figcaption>
+        </figure> `;
+    }
+}
+
+class videoConstructor {
+    constructor(data) {
+        this._videoSrc = data.video;
+        this._videoTitle = data.title;
+        this._videoPhotographerId = data.photographerId;
+        this._videoLikes = data.likes; 
+    }
+    createHtml() {
+        return `
+        <figure>
+            <video>
+                <source src="FishEye_Photos/SamplePhotos/Photographies/${this._videoSrc}"/>
+            </video>
+            <figcaption id="photoLegend">
+                <p id="titre">${this._videoTitle}</p>
+                <p class="nbLikes">${this._videoLikes} ❤</p>
+            </figcaption>
+        </figure> `;
+    }
+}
+

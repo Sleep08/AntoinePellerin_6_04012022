@@ -15,6 +15,7 @@ function photographerFactory(data) {
         // Création du paragraphe contenant ville - citation - tarif :
         // Création d'une /span par élément afin d'en modifier le CSS
         const paragraph = document.createElement( 'p' );
+        paragraph.setAttribute("id", "legende");
 
         // Span avec saut de ligne contenant la ville :
         const ville = document.createElement( 'span' );
