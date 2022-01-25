@@ -22,6 +22,9 @@ constructor (url, gallery, alt) {
     this.actualMedia(url, alt, gallery);
     this.formatMedia(url);
     document.body.appendChild(this.element);
+    // Accessibilité clavier :
+    this.keyUp = this.keyUp.bind(this);
+    document.addEventListener("keyup", this.keyUp);
 }
 
 formatMedia(src) {
@@ -81,9 +84,23 @@ precedent() {
     this.actualMedia(this.gallery[i + -1]);
 }
 
+keyUp(e) {
+    if (e.key === "Escape") {
+        let lightBoxs = document.querySelectorAll(".lightBox");
+        lightBoxs.forEach((lightbox) => {
+            lightbox.style.display = "none";
+        })        
+    } else if (e.key === "ArrowLeft") {
+        this.suivant(e)
+    } else if (e.key === "ArrowRight") {
+        this.precedent(e);
+    }
+}
+
 buildDOM() {
     const dom = document.createElement('div');
-    dom.classList.add('lightBox')
+    dom.classList.add('lightBox');
+    dom.setAttribute("class", "lightBox");
     dom.innerHTML = `        
     <button class="lightBox_close"><i class="fa-solid fa-xmark"></i></button>
     <button class="lightBox_precedent"><i class="fa-solid fa-chevron-left"></i></button>
