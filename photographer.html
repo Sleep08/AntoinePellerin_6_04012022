@@ -10,7 +10,9 @@
   </head>
   <body>
     <header>
+      <a href="index.html">
       <img src="assets/images/logo.png" class="logo" />
+      </a>
     </header>
     <main id="main">
       <div class="photograph-header">
@@ -24,25 +26,33 @@
             <h2 id="contactPhotograph">Contactez-moi</h2>
             <img src="assets/icons/close.svg" onclick="closeModal()"/>
           </header>
-          <form id="contact" method="get">
+          <form id="contact" method="get" aria-haspopup="modalForm" aria-label="Contactez-moi">
             <div class="elementForm">
               <label for="firstname">Prénom</label>
-              <input type="text" id="firstname" />
+              <input type="text" id="firstname" 
+              aria-required="true" title="Saisie du prénom" 
+              aria-label="Prénom"/>
               <p id="erreurPrenom"></p>
             </div>
             <div class="elementForm">
               <label for="lastname">Nom</label>
-              <input type="text" id="lastname" />
+              <input type="text" id="lastname" 
+              aria-required="true" title="Saisie du nom" 
+              aria-label="Nom"/>
               <p id="erreurNom"></p>
             </div>
             <div class="elementForm">
               <label for="email">Email</label>
-              <input type="email" id="email" />
+              <input type="email" id="email" 
+              aria-required="true" title="Saisie de l'adresse mail" 
+              aria-label="Email"/>
               <p id="erreurEmail"></p>
             </div>
             <div class="elementForm">
               <label for="message">Votre message</label>
-              <input type="text" id="message" />
+              <input type="text" id="message"
+               aria-required="true" title="Saisie du message à envoyer au photographe" 
+               aria-label="Message"/>
               <p id="erreurMessage"></p>
             </div>
             <button class="contact_button" type="submit" id="btnEnvoi">Envoyer</button>
@@ -50,16 +60,13 @@
         </div>
       </div>
       <nav>
-        <p id="trier">Tier par :</p>
-				<select
-					id="optionMedias"
-					class="photographer-page__dropdown-menu focus__element-secondary"
-					aria-label="Order by"
-					tabindex="4"
-				>
-					<option value="popularity" class="mediaChoice">Popularité</option>
-					<option value="title" class="mediaChoice">Titre</option>
-				</select>
+      <p id="trier">Tier par :</p>
+      <div id="dropdown">
+        <select>
+					<option value="popularity" id="popularity" aria-label="Popularité">Popularité</div>
+					<option value="title" class="option" id="title" aria-label="Titre">Titre</div>
+        </select>
+      </div>
       </nav>
       <article id="media_gallery">
       </article>

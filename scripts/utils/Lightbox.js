@@ -2,14 +2,12 @@ class lightBox {
 
     static init () {
             const gallerieMedias = document.getElementById("media_gallery") 
-            const links = Array.from(gallerieMedias.querySelectorAll('img'));
+            const links = Array.from(gallerieMedias.querySelectorAll('img[src$=".jpg"],iframe[src$=".mp4"]'));
             console.log(links)
             const gallery = links.map((link) => link.getAttribute("src"));
             links.forEach((link) => {
             link.addEventListener("click", (e) => {
                 e.preventDefault()
-                console.log("hello")
-                console.log("cc")
                 new lightBox(e.currentTarget.getAttribute("src"), gallery);
         })     
     })
@@ -38,7 +36,7 @@ actualMedia(url, alt) {
     this.url = url;
     this.alt = alt;
     if (url.endsWith(".mp4")) {
-        const video = document.createElement("video");
+        const video = document.createElement("iframe");
         const container = this.element.querySelector(".lightbox__container");
         const legend = document.createElement("p");
         legend.innerHTML += this.getFormatedTitle(url);
@@ -46,7 +44,9 @@ actualMedia(url, alt) {
         container.appendChild(video);
         container.appendChild(legend);
         video.setAttribute("controls", "");
+        video.setAttribute("class", "videoLightbox");
         video.src = url;
+        console.log(video.src);
     } else if (url.endsWith(".jpg")) {
         const image = new Image();
         const container = this.element.querySelector(".lightbox__container");

@@ -1,5 +1,12 @@
 const mediaGallery = document.getElementById('media_gallery');
 
+const popularity = document.getElementById("popularity");
+const title = document.getElementById("title");
+
+/*title.addEventListener("click", function(mediaId){
+    return mediaId.sort((a, b) => a.title.localeCompare(b.title));
+});*/
+
 const filterByOption = (mediaId, option) => {
 	switch (option) {
 		case "popularity":
@@ -22,13 +29,13 @@ async function photographerPageEdit() {
     let params = (new URL(document.location)).searchParams;
     let photographerId = params.get('id');
     const currentPhotographer = photographers.find((photographer) => photographer.id == photographerId);
-    console.log(currentPhotographer);
     // Modification des élts de la page selon l'ID du photographe
 
     // récupération des éléments Header :
     const photographHeader = document.querySelector('.photograph-header');
     const headerPhotographTxt = document.querySelector('.headerPhotographTxt');
     headerPhotographTxt.setAttribute("id", "headerTxt");
+    
     // création du txt de l'header :
     const headerH1 = document.createElement('h1');
     headerH1.textContent = currentPhotographer.name;
@@ -47,9 +54,10 @@ async function photographerPageEdit() {
     const picture = '/FishEye_Photos/SamplePhotos/PhotographersIDPhotos/'+currentPhotographer.portrait;
     const img = document.createElement('img');
     img.setAttribute("src", picture);
+    img.setAttribute("aria-label", currentPhotographer.name)
     photographHeader.appendChild(img);
 
-    document.getElementById('contactPhotograph').innerHTML = "Contactez-moi" + '</br>' + currentPhotographer.name;
+    document.getElementById('contactPhotograph').innerHTML = "Contactez-moi" + '</br>' + currentPhotographer.name + '</br>';
     const footer = document.getElementById('footer');
     const divPrice = document.createElement('div');
     divPrice.innerHTML = currentPhotographer.price + "€/jour";
@@ -63,7 +71,6 @@ async function photographerPageEdit() {
 	});
 
     const mediaId = media.filter((media) => media.photographerId == photographerId);
-    console.log(mediaId)
 
     mediaByOption(mediaId);
 
@@ -78,8 +85,6 @@ function mediaByOption(mediaId) {
     mediaId.forEach((med) => {
         const mediaModel = new mediaFactory(med);
         mediaGallery.innerHTML += mediaModel.createHtml();
-        console.log(mediaModel);
-        console.log(med)
 });
 }
 
@@ -89,12 +94,10 @@ function mediaLikes() {
     let likesTotal = document.getElementById("totalLikes");
     nbLikes.forEach(function (like) {
         let Compteur = parseInt(like.innerHTML);
-        let totalCompteur = parseInt(likesTotal.innerHTML);
         like.addEventListener('click', function(){
+            let totalCompteur = parseInt(likesTotal.innerHTML);
             Compteur++;
-            console.log(totalCompteur)
             totalCompteur++;
-            console.log(totalCompteur)
             like.innerHTML = Compteur + " ❤";
             likesTotal.innerHTML = totalCompteur + " ❤"
         }) 

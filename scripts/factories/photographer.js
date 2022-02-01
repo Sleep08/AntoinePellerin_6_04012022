@@ -7,11 +7,15 @@ function photographerFactory(data) {
 
     function getUserCardDOM() {
         const article = document.createElement( 'article' );
+        const divFocusLink = document.createElement('div');
+        divFocusLink.setAttribute("class", "focusLink");
+        divFocusLink.setAttribute("aria-label", name);
         const img = document.createElement( 'img' );
-        img.setAttribute("src", picture)
+        img.setAttribute("src", picture);
         const h2 = document.createElement( 'h2' );
-        h2.innerHTML = "<a href='photographer.html?id="+id+"'>"+name+"</a>";
-        
+        h2.innerHTML = name;
+        const lien = document.createElement('a')
+        lien.setAttribute("href", "photographer.html?id="+id);
         // Création du paragraphe contenant ville - citation - tarif :
         // Création d'une /span par élément afin d'en modifier le CSS
         const paragraph = document.createElement( 'p' );
@@ -32,8 +36,11 @@ function photographerFactory(data) {
         prix.setAttribute("id", "price");
         prix.textContent = price + "€/jour";
 
-        article.appendChild(img);
-        article.appendChild(h2);
+        lien.appendChild(img);
+        lien.appendChild(h2);
+        divFocusLink.appendChild(lien);
+        article.appendChild(divFocusLink);
+
 
         //appel du nouveau paragraphe dans l'article :
         article.appendChild(paragraph);

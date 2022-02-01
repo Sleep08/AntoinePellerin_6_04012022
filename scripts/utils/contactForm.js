@@ -3,16 +3,39 @@
 let modal = document.getElementById('contact_modal');
 let btnOuvertureModal = document.getElementById('openModal');
 
-// Fonction d'ouverture de la modale :
+// Fonction d'accesibilité permettant la mise en valeur de la form :
+function bgGround() {
+    document.querySelector("body").style.backgroundColor = "grey";
+    document.querySelectorAll("figure").forEach((figure) => {
+        figure.style.opacity = "0.5"
+    })
+    document.querySelector("nav").style.opacity = "0.5";
+    document.querySelector(".photograph-header").style.opacity = "0.5";
+    document.querySelector(".photograph-header").style.backgroundColor = "grey";
+}
 
+// Fonction de rétablissement du style à la fermeture de la modale :
+function bgGroundOff() {
+    document.querySelector("body").style.backgroundColor = "white";
+    document.querySelectorAll("figure").forEach((figure) => {
+        figure.style.opacity = "1"
+    })
+    document.querySelector("nav").style.opacity = "1";
+    document.querySelector(".photograph-header").style.opacity = "1";
+    document.querySelector(".photograph-header").style.backgroundColor = "#FAFAFA";
+}
+
+// Ouverture de la modale :
 btnOuvertureModal.addEventListener("click", function(){
     modal.style.display = 'block';
+    bgGround();
 });
 
-// Fonction de fermeture de la modale :
+// Fermeture de la modale :
 
 function closeModal() {
     modal.style.display = 'none';
+    bgGroundOff();
 }
 
 // Ecoute du formulaire & validation des éléments :
@@ -103,7 +126,8 @@ contactForm.addEventListener("submit", function(e) {
         console.log(email.value);
         console.log(message.value);
         document.getElementById("contact_modal").style.display = "none";
+        bgGroundOff();
     } else {
-        alert("Nope !")
+        alert("Merci de renseigner chaque champ")
     }
 })

@@ -37,9 +37,8 @@ class videoConstructor {
     createHtml() {
         return `
         <figure>
-            <video>
-                <source src="FishEye_Photos/SamplePhotos/Photographies/${this._videoSrc}"/>
-            </video>
+            <iframe src="FishEye_Photos/SamplePhotos/Photographies/${this._videoSrc}"/>
+            </iframe>
             <figcaption id="photoLegend">
                 <p id="titre">${this._videoTitle}</p>
                 <p class="nbLikes">${this._videoLikes} ❤</p>

@@ -97,9 +97,10 @@ nav{
 }
 
 .modal header h2 {
-    font-size: 64px;
+    font-size: 50px;
     font-weight: normal;
     text-align: center;
+    padding-bottom: 25px;
 }
 
 form {
@@ -144,10 +145,11 @@ figure img {
     cursor: pointer;
 }
 
-#media_gallery video {
+#media_gallery iframe {
     margin-top: 20px;
     height: 300px;
     width: 300px;
+    cursor: pointer;
 }
 
 #photoLegend {
@@ -199,33 +201,36 @@ footer {
 }
 .lightBox img {
     position: relative;
-    width: 650px;
-    height: 650px;
+    width: 500px;
+    height: 500px;
     object-fit: cover;
     top: 10%;
 }
 
 .lightBox_suivant,
 .lightBox_precedent {
+    background-color: white;
     border: none;
-    position: relative;
+    position: fixed;
     top: 50%;
     cursor: pointer;
 }
 
 .lightBox_precedent{
-    left:450px;
+    left:0;
 }
 
 .lightBox_suivant{
-    right: 450px;
+    right: 0;
 }
 
 .lightBox_close{
+    background-color: white;
+    border: none;
     cursor: pointer;
     position: absolute;
     top:20px;
-    right: 25%;
+    right: 50px;
 }
 
 .fa-chevron-right, .fa-chevron-left, .fa-xmark {
@@ -238,12 +243,30 @@ nav {
     display: flex;
 }
 
-#optionMedias {
-    margin-left: 35px;
-    width: 150px;
-    padding-left: 10px;
-    background-color: #901C1C;
-    color: white;
-    font-weight: bold;
+.lightbox__container__img-title{
+    padding-left: 50px;
 }
 
+.videoLightbox {
+    width: 450px;
+    height: 450px;
+}
+
+.focusLink {
+    text-align: center;
+}
+
+/* Menu DropDown */
+
+select{
+    margin-left: 20px;
+    cursor: pointer;
+    position: relative;
+    padding-top: 20px;
+    padding-left: 10px;
+    color: #FAFAFA;
+    width: 150px;
+    height: 50px;
+    background-color: #901C1C;
+    font-weight: 1.5em;
+}
