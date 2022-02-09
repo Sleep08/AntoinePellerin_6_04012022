@@ -9,10 +9,17 @@ class lightBox {
             link.addEventListener("click", (e) => {
                 e.preventDefault()
                 new lightBox(e.currentTarget.getAttribute("src"), gallery);
+        })
+        link.addEventListener('keyup', (e) => {
+            if (e.keyCode === 13) {
+                e.preventDefault()
+                new lightBox(e.currentTarget.getAttribute("src"), gallery);
+            } else {
+                return;
+            }
         })     
     })
 } 
-
 
 constructor (url, gallery, alt) {
     this.element = this.buildDOM(url, alt);
@@ -91,9 +98,9 @@ keyUp(e) {
             lightbox.style.display = "none";
         })        
     } else if (e.key === "ArrowLeft") {
-        this.suivant(e)
+        this.precedent(e)
     } else if (e.key === "ArrowRight") {
-        this.precedent(e);
+        this.suivant(e);
     }
 }
 

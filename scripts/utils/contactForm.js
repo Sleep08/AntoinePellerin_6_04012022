@@ -32,11 +32,16 @@ btnOuvertureModal.addEventListener("click", function(){
 });
 
 // Fermeture de la modale :
-
 function closeModal() {
     modal.style.display = 'none';
     bgGroundOff();
 }
+
+document.getElementById("closemodale").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        closeModal();
+    }
+});
 
 // Ecoute du formulaire & validation des éléments :
 

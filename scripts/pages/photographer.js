@@ -1,31 +1,25 @@
 const mediaGallery = document.getElementById('media_gallery');
 
+// Dropdown avec choix du filtre :
 const popularity = document.getElementById("popularity");
 const title = document.getElementById("title");
 
-/*title.addEventListener("click", function(mediaId){
-    return mediaId.sort((a, b) => a.title.localeCompare(b.title));
-});*/
-
-const filterByOption = (mediaId, option) => {
-	switch (option) {
-		case "popularity":
-			return mediaId.sort((a, b) => {
+const filterByOption = (mediaId, tri) => {
+        if (tri == "popularité") {
+            return mediaId.sort((a, b) => {
 				return b.likes - a.likes;
 			});
-		case "title":
-			return mediaId.sort((a, b) => a.title.localeCompare(b.title));
-		default:
-			return mediaId.sort((a, b) => {
-				return b.likes - a.likes;
-			});
-	}
+        } else {
+            return mediaId.sort((a, b) => a.title.localeCompare(b.title));
+        }
 };
 
+// Fonction regroupant l'ensemble des modifications à apporter
+// à la page selon le choix du photographe :
 async function photographerPageEdit() {
     // Récupération des Data Photographers
     const { photographers, media } = await getMedia();
-    // Récupération de l'Id du photographe selon est cliqué depuis l'index
+    // Récupération de l'Id du photographe selon celui cliqué depuis l'index
     let params = (new URL(document.location)).searchParams;
     let photographerId = params.get('id');
     const currentPhotographer = photographers.find((photographer) => photographer.id == photographerId);
@@ -57,23 +51,87 @@ async function photographerPageEdit() {
     img.setAttribute("aria-label", currentPhotographer.name)
     photographHeader.appendChild(img);
 
+    // Modification du nom de photographer dans la modale :
     document.getElementById('contactPhotograph').innerHTML = "Contactez-moi" + '</br>' + currentPhotographer.name + '</br>';
+    
+    // Footer selon prix du photographe :
     const footer = document.getElementById('footer');
     const divPrice = document.createElement('div');
     divPrice.innerHTML = currentPhotographer.price + "€/jour";
     footer.appendChild(divPrice);
 
-	document.addEventListener("change", function (event) {
+    // Ecoute du dropdown selon click ou keydown :
+
+    let arrowDropdown = document.querySelector(".fa-chevron-down");
+    let arrowDropdownUp = document.querySelector(".fa-chevron-up");
+    arrowDropdown.addEventListener("click", function(){
+        document.getElementById("title").style.display = 'block';
+        arrowDropdown.style.display='none';
+        arrowDropdownUp.style.display='block';
+    });
+
+    arrowDropdown.addEventListener('keydown', function(e){
+        if(e.keyCode === 13) {
+            document.getElementById("title").style.display = 'block';
+            arrowDropdown.style.display='none';
+            arrowDropdownUp.style.display='block';
+        }
+    });
+
+    arrowDropdownUp.addEventListener("click", function(){
+        document.getElementById("title").style.display = 'none';
+        arrowDropdown.style.display="block";
+        arrowDropdownUp.style.display="none";
+    });
+
+    arrowDropdownUp.addEventListener('keydown', function(e){
+        if(e.keyCode === 13) {
+            arrowDropdown.style.display="block";
+            arrowDropdownUp.style.display="none";
+        }
+    });
+
+	document.getElementById("popularity").addEventListener("click", function () {
 		mediaGallery.innerHTML = "";
-		const option = filterByOption(mediaId, event.target.value);
-		mediaByOption(option);
+		const option = filterByOption(mediaId, "popularité");
+        mediaByOption(option);
         lightBox.init();
+        mediaLikes();
 	});
 
-    const mediaId = media.filter((media) => media.photographerId == photographerId);
+    document.getElementById("popularity").addEventListener('keydown', function (e) {
+        if(e.keyCode === 13) {
+        mediaGallery.innerHTML = "";
+		const option = filterByOption(mediaId, "popularité");
+        mediaByOption(option);
+        lightBox.init();
+        mediaLikes();
+        }
+	});
 
+    document.getElementById("title").addEventListener("click", function () {
+		mediaGallery.innerHTML = "";
+		const option = filterByOption(mediaId, "titre");
+        mediaByOption(option);
+        lightBox.init();
+        mediaLikes();
+	});
+
+    document.getElementById("title").addEventListener('keydown', function (e) {
+        if(e.keyCode === 13) {
+        mediaGallery.innerHTML = "";
+		const option = filterByOption(mediaId, "titre");
+        mediaByOption(option);
+        lightBox.init();
+        mediaLikes();
+        }
+	});
+
+    // Média selon l'Id photographer : 
+    const mediaId = media.filter((media) => media.photographerId == photographerId);
     mediaByOption(mediaId);
 
+    // Affichage du nombre de likes total :
     let totalLikes = (mediaId.reduce((n, {likes}) => n + likes, 0));
     const divLikesTotal = document.createElement('div');
     divLikesTotal.setAttribute("id", "totalLikes");
@@ -81,6 +139,7 @@ async function photographerPageEdit() {
     footer.appendChild(divLikesTotal);
 };
 
+// Affichage des médias par défaut sans prise en compte du filtre :
 function mediaByOption(mediaId) {
     mediaId.forEach((med) => {
         const mediaModel = new mediaFactory(med);
@@ -88,7 +147,7 @@ function mediaByOption(mediaId) {
 });
 }
 
-// Création d'une fonction pour incrémenter le nb de likes :
+// Fonction pour incrémenter le nb de likes :
 function mediaLikes() {
     let nbLikes = document.querySelectorAll('.nbLikes');
     let likesTotal = document.getElementById("totalLikes");
@@ -100,9 +159,19 @@ function mediaLikes() {
             totalCompteur++;
             like.innerHTML = Compteur + " ❤";
             likesTotal.innerHTML = totalCompteur + " ❤"
-        }) 
+        });
+        like.addEventListener('keydown', function(e){
+            if(e.keyCode === 13) {
+                let totalCompteur = parseInt(likesTotal.innerHTML);
+                Compteur++;
+                totalCompteur++;
+                like.innerHTML = Compteur + " ❤";
+                likesTotal.innerHTML = totalCompteur + " ❤"
+            }
+        })
     })            
-} 
+}
+
 
 // Récupération JSON - API Fetch
 const getMedia = async () => {

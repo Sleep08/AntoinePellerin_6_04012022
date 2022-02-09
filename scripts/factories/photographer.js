@@ -5,6 +5,7 @@ function photographerFactory(data) {
     // Modification du chemin vers l'image portrait du photographe :
     const picture = `FishEye_Photos/SamplePhotos/PhotographersIDPhotos/${portrait}`;
 
+    // Fonction globale permattant la création du header pour chaque photographer :
     function getUserCardDOM() {
         const article = document.createElement( 'article' );
         const divFocusLink = document.createElement('div');
@@ -47,6 +48,7 @@ function photographerFactory(data) {
         paragraph.appendChild(ville);
         paragraph.appendChild(citation);
         paragraph.appendChild(prix);
+
         return (article);
     }
     return { name, picture, city, getUserCardDOM }

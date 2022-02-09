@@ -10,62 +10,68 @@
   </head>
   <body>
     <header>
-      <a href="index.html">
-      <img src="assets/images/logo.png" class="logo" />
+      <a href="index.html"
+      tabindex="1"
+      title="Page d'accueil"
+      aria-label="Page d'accueil">
+      <img src="assets/images/logo.png" class="logo"
+      focusable="true" />
       </a>
     </header>
     <main id="main">
       <div class="photograph-header">
         <div class="headerPhotographTxt"></div>
-        <button class="contact_button" id="openModal">Contactez-moi</button>
+        <button class="contact_button" id="openModal" tabindex="2" aria-label="Contactez-moi">Contactez-moi</button>
       </div>
       <footer id="footer"></footer>
       <div id="contact_modal">
         <div class="modal">
           <header>
             <h2 id="contactPhotograph">Contactez-moi</h2>
-            <img src="assets/icons/close.svg" onclick="closeModal()"/>
+            <img src="assets/icons/close.svg" onclick="closeModal()" tabindex="3" aria-label="Fermer le formulaire" id="closemodale"/>
           </header>
-          <form id="contact" method="get" aria-haspopup="modalForm" aria-label="Contactez-moi">
+          <form id="contact" method="get" aria-haspopup="modalForm" aria-label="Contactez-moi" aria-modal="true" role="dialog">
             <div class="elementForm">
               <label for="firstname">Prénom</label>
               <input type="text" id="firstname" 
               aria-required="true" title="Saisie du prénom" 
-              aria-label="Prénom"/>
+              aria-label="Prénom" 
+              tabindex="3"/>
               <p id="erreurPrenom"></p>
             </div>
             <div class="elementForm">
               <label for="lastname">Nom</label>
               <input type="text" id="lastname" 
               aria-required="true" title="Saisie du nom" 
-              aria-label="Nom"/>
+              aria-label="Nom"
+              tabindex="3"/>
               <p id="erreurNom"></p>
             </div>
             <div class="elementForm">
               <label for="email">Email</label>
               <input type="email" id="email" 
               aria-required="true" title="Saisie de l'adresse mail" 
-              aria-label="Email"/>
+              aria-label="Email"
+              tabindex="3"/>
               <p id="erreurEmail"></p>
             </div>
             <div class="elementForm">
               <label for="message">Votre message</label>
               <input type="text" id="message"
                aria-required="true" title="Saisie du message à envoyer au photographe" 
-               aria-label="Message"/>
+               aria-label="Message"
+               tabindex="3"/>
               <p id="erreurMessage"></p>
             </div>
-            <button class="contact_button" type="submit" id="btnEnvoi">Envoyer</button>
+            <button class="contact_button" type="submit" id="btnEnvoi" tabindex="3">Envoyer</button>
           </form>
         </div>
       </div>
       <nav>
       <p id="trier">Tier par :</p>
-      <div id="dropdown">
-        <select>
-					<option value="popularity" id="popularity" aria-label="Popularité">Popularité</div>
-					<option value="title" class="option" id="title" aria-label="Titre">Titre</div>
-        </select>
+      <div id="dropdown" role="listbox" aria-label="Liste des options de tri">
+					<div id="popularity" class="option" aria-label="Popularité" tabindex="4" role="option">Popularité</div><i class="fas fa-chevron-down" tabindex="4" aria-label="Afficher les choix"></i><i class="fas fa-chevron-up" tabindex="4" aria-label="Fermer le menu"></i>
+					<div id="title" class="option" aria-label="Titre" tabindex="4" role="option"><p>Titre</p></div>
       </div>
       </nav>
       <article id="media_gallery">
