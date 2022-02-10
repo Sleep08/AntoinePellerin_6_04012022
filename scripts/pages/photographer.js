@@ -45,7 +45,7 @@ async function photographerPageEdit() {
     headerPhotographTxt.appendChild(taglinePhotograph);
     // Ajout de l'img du photograph :
 
-    const picture = '/FishEye_Photos/SamplePhotos/PhotographersIDPhotos/'+currentPhotographer.portrait;
+    const picture = 'FishEye_Photos/SamplePhotos/PhotographersIDPhotos/'+currentPhotographer.portrait;
     const img = document.createElement('img');
     img.setAttribute("src", picture);
     img.setAttribute("aria-label", currentPhotographer.name)
@@ -62,36 +62,40 @@ async function photographerPageEdit() {
 
     // Ecoute du dropdown selon click ou keydown :
 
-    let arrowDropdown = document.querySelector(".fa-chevron-down");
-    let arrowDropdownUp = document.querySelector(".fa-chevron-up");
+    let arrowDropdown = document.querySelector(".arrowdown");
+    let arrowDropdownUp = document.querySelector(".arrowup");
     arrowDropdown.addEventListener("click", function(){
-        document.getElementById("title").style.display = 'block';
+        title.style.display = 'block';
         arrowDropdown.style.display='none';
         arrowDropdownUp.style.display='block';
+        document.getElementById("dropdown").setAttribute("aria-expanded", "true");
     });
 
     arrowDropdown.addEventListener('keydown', function(e){
         if(e.keyCode === 13) {
-            document.getElementById("title").style.display = 'block';
+            title.style.display = 'block';
             arrowDropdown.style.display='none';
             arrowDropdownUp.style.display='block';
+            document.getElementById("dropdown").setAttribute("aria-expanded", "true");
         }
     });
 
     arrowDropdownUp.addEventListener("click", function(){
-        document.getElementById("title").style.display = 'none';
+        title.style.display = 'none';
         arrowDropdown.style.display="block";
         arrowDropdownUp.style.display="none";
+        document.getElementById("dropdown").setAttribute("aria-expanded", "false");
     });
 
     arrowDropdownUp.addEventListener('keydown', function(e){
         if(e.keyCode === 13) {
             arrowDropdown.style.display="block";
             arrowDropdownUp.style.display="none";
+            document.getElementById("dropdown").setAttribute("aria-expanded", "false");
         }
     });
 
-	document.getElementById("popularity").addEventListener("click", function () {
+	popularity.addEventListener("click", function () {
 		mediaGallery.innerHTML = "";
 		const option = filterByOption(mediaId, "popularité");
         mediaByOption(option);
@@ -99,7 +103,7 @@ async function photographerPageEdit() {
         mediaLikes();
 	});
 
-    document.getElementById("popularity").addEventListener('keydown', function (e) {
+    popularity.addEventListener('keydown', function (e) {
         if(e.keyCode === 13) {
         mediaGallery.innerHTML = "";
 		const option = filterByOption(mediaId, "popularité");
@@ -109,7 +113,7 @@ async function photographerPageEdit() {
         }
 	});
 
-    document.getElementById("title").addEventListener("click", function () {
+    title.addEventListener("click", function () {
 		mediaGallery.innerHTML = "";
 		const option = filterByOption(mediaId, "titre");
         mediaByOption(option);
@@ -117,7 +121,7 @@ async function photographerPageEdit() {
         mediaLikes();
 	});
 
-    document.getElementById("title").addEventListener('keydown', function (e) {
+    title.addEventListener('keydown', function (e) {
         if(e.keyCode === 13) {
         mediaGallery.innerHTML = "";
 		const option = filterByOption(mediaId, "titre");
@@ -130,6 +134,11 @@ async function photographerPageEdit() {
     // Média selon l'Id photographer : 
     const mediaId = media.filter((media) => media.photographerId == photographerId);
     mediaByOption(mediaId);
+
+    //Affichage de la galerie par défaut = Popularité :
+    mediaGallery.innerHTML = "";
+    const option = filterByOption(mediaId, "popularité");
+    mediaByOption(option);
 
     // Affichage du nombre de likes total :
     let totalLikes = (mediaId.reduce((n, {likes}) => n + likes, 0));
@@ -171,7 +180,6 @@ function mediaLikes() {
         })
     })            
 }
-
 
 // Récupération JSON - API Fetch
 const getMedia = async () => {
