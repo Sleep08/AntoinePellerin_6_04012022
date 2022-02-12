@@ -25,7 +25,7 @@ class imgConstructor {
             <img src="FishEye_Photos/SamplePhotos/Photographies/${this._imgSrc}" tabindex="5" alt="${this._imgTitle}"/>
             <figcaption id="photoLegend">
                 <p id="titre">${this._imgTitle}</p>
-                <p class="nbLikes" title="j'aime" tabindex="5" aria-label="5">${this._imgLikes} ❤</p>
+                <p class="nbLikes" title="j'aime" tabindex="5" aria-label="Ajouter un like">${this._imgLikes} ❤</p>
             </figcaption>
         </figure> `;
     }
