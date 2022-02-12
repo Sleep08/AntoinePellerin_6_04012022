@@ -14,6 +14,41 @@ const filterByOption = (mediaId, tri) => {
         }
 };
 
+// Ecoute du dropdown selon click ou keydown :
+
+let arrowDropdown = document.querySelector(".arrowdown");
+let arrowDropdownUp = document.querySelector(".arrowup");
+arrowDropdown.addEventListener("click", function(){
+    title.style.display = 'block';
+    arrowDropdown.style.display='none';
+    arrowDropdownUp.style.display='block';
+    document.getElementById("dropdown").setAttribute("aria-expanded", "true");
+});
+
+arrowDropdown.addEventListener('keydown', function(e){
+    if(e.keyCode === 13) {
+        title.style.display = 'block';
+        arrowDropdown.style.display='none';
+        arrowDropdownUp.style.display='block';
+        document.getElementById("dropdown").setAttribute("aria-expanded", "true");
+    }
+});
+
+arrowDropdownUp.addEventListener("click", function(){
+    title.style.display = 'none';
+    arrowDropdown.style.display="block";
+    arrowDropdownUp.style.display="none";
+    document.getElementById("dropdown").setAttribute("aria-expanded", "false");
+});
+
+arrowDropdownUp.addEventListener('keydown', function(e){
+    if(e.keyCode === 13) {
+        arrowDropdown.style.display="block";
+        arrowDropdownUp.style.display="none";
+        document.getElementById("dropdown").setAttribute("aria-expanded", "false");
+    }
+});
+
 // Fonction regroupant l'ensemble des modifications à apporter
 // à la page selon le choix du photographe :
 async function photographerPageEdit() {
@@ -60,40 +95,7 @@ async function photographerPageEdit() {
     divPrice.innerHTML = currentPhotographer.price + "€/jour";
     footer.appendChild(divPrice);
 
-    // Ecoute du dropdown selon click ou keydown :
-
-    let arrowDropdown = document.querySelector(".arrowdown");
-    let arrowDropdownUp = document.querySelector(".arrowup");
-    arrowDropdown.addEventListener("click", function(){
-        title.style.display = 'block';
-        arrowDropdown.style.display='none';
-        arrowDropdownUp.style.display='block';
-        document.getElementById("dropdown").setAttribute("aria-expanded", "true");
-    });
-
-    arrowDropdown.addEventListener('keydown', function(e){
-        if(e.keyCode === 13) {
-            title.style.display = 'block';
-            arrowDropdown.style.display='none';
-            arrowDropdownUp.style.display='block';
-            document.getElementById("dropdown").setAttribute("aria-expanded", "true");
-        }
-    });
-
-    arrowDropdownUp.addEventListener("click", function(){
-        title.style.display = 'none';
-        arrowDropdown.style.display="block";
-        arrowDropdownUp.style.display="none";
-        document.getElementById("dropdown").setAttribute("aria-expanded", "false");
-    });
-
-    arrowDropdownUp.addEventListener('keydown', function(e){
-        if(e.keyCode === 13) {
-            arrowDropdown.style.display="block";
-            arrowDropdownUp.style.display="none";
-            document.getElementById("dropdown").setAttribute("aria-expanded", "false");
-        }
-    });
+    
 
 	popularity.addEventListener("click", function () {
 		mediaGallery.innerHTML = "";
@@ -134,8 +136,7 @@ async function photographerPageEdit() {
     // Média selon l'Id photographer : 
     const mediaId = media.filter((media) => media.photographerId == photographerId);
     mediaByOption(mediaId);
-
-    //Affichage de la galerie par défaut = Popularité :
+    //Puis affichage par "Popularité" :
     mediaGallery.innerHTML = "";
     const option = filterByOption(mediaId, "popularité");
     mediaByOption(option);
@@ -148,7 +149,7 @@ async function photographerPageEdit() {
     footer.appendChild(divLikesTotal);
 };
 
-// Affichage des médias par défaut sans prise en compte du filtre :
+// Création des média d'après la factory :
 function mediaByOption(mediaId) {
     mediaId.forEach((med) => {
         const mediaModel = new mediaFactory(med);

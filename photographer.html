@@ -15,7 +15,7 @@
       title="Page d'accueil"
       aria-label="Page d'accueil">
       <img src="assets/images/logo.png" class="logo"
-      focusable="true" alt="Fisheye : Page d'accueil"/>
+      alt="Fisheye : Page d'accueil"/>
       </a>
     </header>
     <main id="main">
@@ -30,7 +30,7 @@
             <h2 id="contactPhotograph">Contactez-moi</h2>
             <img src="assets/icons/close.svg" onclick="closeModal()" tabindex="3" aria-label="Fermer le formulaire" id="closemodale" alt="Fermeture de la modale"/>
           </header>
-          <form id="contact" method="get" aria-haspopup="modalForm" aria-label="Contactez-moi" aria-modal="true" role="dialog">
+          <form id="contact" method="get" aria-label="Contactez-moi">
             <div class="elementForm">
               <label for="firstname">Prénom</label>
               <input type="text" id="firstname" 
@@ -76,7 +76,6 @@
       </nav>
       <article id="media_gallery">
       </article>
-      </div>
     </main>
     <script src="scripts/factories/photographer.js"></script>
     <script src="scripts/factories/media.js"></script>
